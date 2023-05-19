@@ -1,0 +1,129 @@
+<header class="absolute inset-x-0 top-0 z-50 ">
+    <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+        <div class="flex lg:flex-1">
+            <a href="#" class="-m-1.5 p-1.5">
+                <span class="sr-only">StockGround</span>
+                <img class="h-8 w-auto" src="../../../assets/finance.png" alt="">
+            </a>
+        </div>
+        <!-- Search Stock Form -->
+        <form class="ml-4" (submit)="searchStocks()">
+            <div class="relative">
+                <input type="text"
+                    class=" bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none border border-gray-300 sm:text-sm sm:w-64 md:w-80 lg:w-96 xl:w-112"
+                    placeholder="Search stocks..." name="stockSearch" [(ngModel)]="searchKeywords">
+                <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
+                    <svg class="h-4 w-4 fill-gray-600" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
+                        viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;"
+                        xml:space="preserve" width="512px" height="512px">
+                        <path
+                            d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+                    </svg>
+                </button>
+            </div>
+        </form>
+        <div class="flex lg:hidden">
+            <button type="button"
+                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                aria-controls="mobile-menu" aria-expanded="false" (click)="toggleProfileDropdown()">
+                <span class="sr-only">Open main menu</span>
+                <img class="h-6 w-auto" src="../../../assets/profile.png" alt="">
+            </button>
+        </div>
+        <div class="hidden lg:flex lg:flex-1 lg:justify-end items-center">
+            <div class="relative inline-block text-left">
+                <div>
+                    <button type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white"
+                        id="menu-button" aria-expanded="true" aria-haspopup="true" (click)="toggleProfileDropdown()">
+                        <img class="h-8 w-auto" src="../../../assets/profile.png" alt="">
+                    </button>
+                </div>
+                <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1"
+                    [class.hidden]="!isProfileDropdownOpen">
+                    <div class="py-1" role="none">
+                        <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                        <a class="text-gray-700 block px-4 py-2 text-sm hover:cursor-pointer" role="menuitem"
+                            tabindex="-1" id="menu-item-0">Account settings</a>
+                        <a class="text-gray-700 block px-4 py-2 text-sm hover:cursor-pointer" role="menuitem"
+                            tabindex="-1" id="menu-item-1" (click)="switchAccount()">Switch Account</a>
+                        <a class="text-gray-700 block px-4 py-2 text-sm hover:cursor-pointer" role="menuitem"
+                            tabindex="-1" id="menu-item-2" (click)="logout()">Sign out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div *ngIf="isProfileDropdownOpen" class="lg:hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 z-50"></div>
+        <div
+            class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div class="flex items-center justify-between">
+                <a href="#" class="-m-1.5 p-1.5">
+                    <span class="sr-only">StockGround</span>
+                    <img class="h-8 w-auto" src="../../../assets/finance.png" alt="">
+                </a>
+                <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" (click)="toggleProfileDropdown()">
+                    <span class="sr-only">Close menu</span>
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="mt-6 flow-root">
+                <div class="my-6 divide-y divide-gray-500/10">
+                    <div class="space-y-2 py-6">
+                        <a
+                            class="mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 hover:cursor-pointer">Account
+                            settings</a>
+                        <a (click)="switchAccount()"
+                            class="mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 hover:cursor-pointer">Switch
+                            Account</a>
+                    </div>
+                    <div class="py-6">
+                        <a (click)="logout()"
+                            class="mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 hover:cursor-pointer">Sign
+                            out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-3xl mx-auto">
+        <!-- Search Results -->
+        <div *ngIf="searchResults && searchResults.length > 0" class="mt-4">
+            <h2 class="text-xl font-bold mb-2">Search Results:</h2>
+            <ul>
+                <li *ngFor="let result of searchResults" class="cursor-pointer hover:bg-gray-100 p-2 rounded-md mb-2"
+                    (click)="getIntradayData(result['1. symbol'])">
+                    <span>{{ result['1. symbol'] }}</span> - <span>{{ result['2. name'] }}</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Intraday Data -->
+        <div *ngIf="intradayData" class="mt-4">
+            <h2 class="text-xl font-bold mb-2">Intraday Data:</h2>
+            <ul>
+                <li *ngFor="let data of intradayData['Time Series (5min)'] | keyvalue">
+                    <span>{{ data.key }}</span> - <span>{{ data.value['4. close'] }}</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Daily Data -->
+        <div *ngIf="dailyData" class="mt-4">
+            <h2 class="text-xl font-bold mb-2">Daily Data:</h2>
+            <ul>
+                <li *ngFor="let data of dailyData['Time Series (Daily)'] | keyvalue">
+                    <span>{{ data.key }}</span> - <span>{{ data.value['4. close'] }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>

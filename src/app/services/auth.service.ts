@@ -7,10 +7,10 @@ import firebase from 'firebase/compat/app';
   providedIn: 'root',
 })
 export class AuthService {
-  user$: Observable<firebase.User>;
+  user$: Observable<firebase.User | null>;
 
   constructor(private afAuth: AngularFireAuth) {
-    this.user$ = afAuth.authState;
+    this.user$ = afAuth.authState as Observable<firebase.User | null>;
   }
 
   register(
