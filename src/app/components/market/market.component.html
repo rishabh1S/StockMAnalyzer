@@ -1,0 +1,174 @@
+<section class="relative bg-gray-900 text-white min-h-screen">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+        <div class="max-w-screen-md mb-8 lg:mb-16">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white">Discover Top Trending Stocks</h2>
+            <p class="text-gray-400 sm:text-xl">Explore the most popular and promising stocks that are making waves in
+                the market. JuStock's
+                Marketplace brings you the latest trends and hot investment opportunities, giving you an edge in your
+                stock
+                research and decision-making.</p>
+        </div>
+        <table class="w-full">
+            <tbody>
+                <tr class="border-b border-gray-600">
+                    <td class="py-2 font-bold text-xl">
+                        <div class="flex items-center sm:justify-center">
+                            <span>{{ trendingStocks[0].name.split(' ').slice(0, 2).join(' ') }}</span>
+                            <span class="text-gray-400 pl-1">{{ trendingStocks[0].symbol }}</span>
+                        </div>
+                    </td>
+                    <td class="py-2 font-bold text-xl">
+                        <div class="flex items-center sm:justify-center">
+                            $ {{ trendingStocks[0].c.toLocaleString() }}
+                        </div>
+                    </td>
+                    <td [ngClass]="{ 'text-red-500': trendingStocks[0].dp < 0, 'text-green-500': trendingStocks[0].dp >= 0 }"
+                        class="py-2 text-red-500 font-bold">
+                        <div class="flex items-centre sm:justify-center">
+                            {{ trendingStocks[0].dp }}%
+                        </div>
+                    </td>
+                    <td class="py-2 font-bold">
+                        <div class="flex items-centre sm:justify-center">
+                            ${{ trendingStocks[0].mc.toLocaleString() }}
+                        </div>
+                    </td>
+                    <td class="py-2">
+                        <div class="flex items-centre sm:justify-center">
+                            <button
+                                class="text-white bg-blue-600 hover:bg-blue-700 py-1 px-3 rounded-full hidden sm:inline-block">Explore
+                                <span aria-hidden="true">&rarr;</span></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="border-b border-gray-600">
+                    <td class="py-2 font-bold text-xl">
+                        <div class="flex items-center sm:justify-center">
+                            <span>{{ trendingStocks[1].name.split(' ').slice(0, 2).join(' ') }}</span>
+                            <span class="text-gray-400 pl-1">{{ trendingStocks[1].symbol }}</span>
+                        </div>
+                    </td>
+                    <td class="py-2 font-bold text-xl">
+                        <div class="flex items-center sm:justify-center">
+                            ${{ trendingStocks[1].c.toLocaleString() }}
+                        </div>
+                    </td>
+                    <td [ngClass]="{ 'text-red-500': trendingStocks[1].dp < 0, 'text-green-500': trendingStocks[1].dp >= 0 }"
+                        class="py-2 text-red-500 font-bold">
+                        <div class="flex items-centre sm:justify-center">
+                            {{ trendingStocks[1].dp }}%
+                        </div>
+                    </td>
+                    <td class="py-2 font-bold">
+                        <div class="flex items-centre sm:justify-center">
+                            ${{ trendingStocks[1].mc.toLocaleString() }}
+                        </div>
+                    </td>
+                    <td class="py-2">
+                        <div class="flex items-centre sm:justify-center">
+                            <button
+                                class="text-white bg-blue-600 hover:bg-blue-700 py-1 px-3 rounded-full hidden sm:inline-block">Explore
+                                <span aria-hidden="true">&rarr;</span></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="border-b border-gray-600">
+                    <td class="py-2 font-bold text-xl">
+                        <div class="flex items-center sm:justify-center">
+                            <span>{{ trendingStocks[2].name.split(' ').slice(0, 2).join(' ') }}</span>
+                            <span class="text-gray-400 pl-1">{{ trendingStocks[2].symbol }}</span>
+                        </div>
+                    </td>
+                    <td class="py-2 font-bold text-xl">
+                        <div class="flex items-center sm:justify-center">
+                            ${{ trendingStocks[2].c.toLocaleString() }}
+                        </div>
+                    </td>
+                    <td [ngClass]="{ 'text-red-500': trendingStocks[2].dp < 0, 'text-green-500': trendingStocks[2].dp >= 0 }"
+                        class="py-2 text-red-500">
+                        <div class="flex items-centre sm:justify-center font-bold">
+                            {{ trendingStocks[2].dp }}%
+                        </div>
+                    </td>
+                    <td class="py-2 font-bold">
+                        <div class="flex items-centre sm:justify-center">
+                            ${{ trendingStocks[2].mc.toLocaleString() }}
+                        </div>
+                    </td>
+                    <td class="py-2">
+                        <div class="flex items-centre sm:justify-center">
+                            <button
+                                class="text-white bg-blue-600 hover:bg-blue-700 py-1 px-3 rounded-full hidden sm:inline-block">Explore
+                                <span aria-hidden="true">&rarr;</span></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="border-b border-gray-600">
+                    <td class="py-2 font-bold text-xl">
+                        <div class="flex items-center sm:justify-center">
+                            <span>{{ trendingStocks[3].name.split(' ').slice(0, 2).join(' ') }}</span>
+                            <span class="text-gray-400 pl-1">{{ trendingStocks[3].symbol }}</span>
+                        </div>
+                    </td>
+                    <td class="py-2 font-bold text-xl">
+                        <div class="flex items-center sm:justify-center">
+                            ${{ trendingStocks[3].c.toLocaleString() }}
+                        </div>
+                    </td>
+                    <td [ngClass]="{ 'text-red-500': trendingStocks[3].dp < 0, 'text-green-500': trendingStocks[3].dp >= 0 }"
+                        class="py-2 text-red-500 font-bold">
+                        <div class="flex items-centre sm:justify-center">
+                            {{ trendingStocks[3].dp }}%
+                        </div>
+                    </td>
+                    <td class="py-2 font-bold">
+                        <div class="flex items-centre sm:justify-center">
+                            ${{ trendingStocks[3].mc.toLocaleString() }}
+                        </div>
+                    </td>
+                    <td class="py-2">
+                        <div class="flex items-centre sm:justify-center">
+                            <button
+                                class="text-white bg-blue-600 hover:bg-blue-700 py-1 px-3 rounded-full hidden sm:inline-block">Explore
+                                <span aria-hidden="true">&rarr;</span></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="border-b border-gray-600">
+                    <td class="py-2 font-bold text-xl">
+                        <div class="flex items-center sm:justify-center">
+                            <span>{{ trendingStocks[4].name.split(' ').slice(0, 2).join(' ') }}</span>
+                            <span class="text-gray-400 pl-1">{{ trendingStocks[4].symbol }}</span>
+                        </div>
+                    </td>
+                    <td class="py-2 font-bold text-xl">
+                        <div class="flex items-center sm:justify-center">
+                            ${{ trendingStocks[4].c.toLocaleString() }}
+                        </div>
+                    </td>
+                    <td [ngClass]="{ 'text-red-500': trendingStocks[4].dp < 0, 'text-green-500': trendingStocks[4].dp >= 0 }"
+                        class="py-2 text-red-500 font-bold">
+                        <div class="flex items-centre sm:justify-center">
+                            {{ trendingStocks[4].dp }}%
+                        </div>
+                    </td>
+                    <td class="py-2 font-bold">
+                        <div class="flex items-centre sm:justify-center">
+                            ${{ trendingStocks[4].mc.toLocaleString() }}
+                        </div>
+                    </td>
+                    <td class="py-2">
+                        <div class="flex items-centre sm:justify-center">
+                            <button routerLink="/login"
+                                class="text-white bg-blue-600 hover:bg-blue-700 py-1 px-3 rounded-full hidden sm:inline-block">Explore
+                                <span aria-hidden="true">&rarr;</span></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="my-8 text-gray-400 sm:text-xl">Sign up now! and stay ahead of the market with JuStock!</p>
+        <a routerLink="/register" class="btn text-white bg-blue-600 hover:bg-blue-700 py-2 px-5 rounded-full">Sign
+            Up</a>
+    </div>
+</section>

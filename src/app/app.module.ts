@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +20,12 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AboutComponent } from './components/about/about.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { LoaderComponent } from './components/loader/loader.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { HelpSupportComponent } from './components/help-support/help-support.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { FeatureComponent } from './components/feature/feature.component';
+import { MarketComponent } from './components/market/market.component';
 
 @NgModule({
   declarations: [
@@ -26,9 +35,16 @@ import { HttpClientModule } from '@angular/common/http';
     LandingComponent,
     MainComponent,
     AboutComponent,
+    LoaderComponent,
+    SettingsComponent,
+    HelpSupportComponent,
+    FooterComponent,
+    FeatureComponent,
+    MarketComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
@@ -36,6 +52,7 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     HttpClientModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

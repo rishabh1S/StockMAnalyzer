@@ -1,6 +1,7 @@
 export const defaultEnvironment = {
   production: false,
   VantageAPIKey: '0NFNFJCGIC9WXGWW',
+  FinnhubAPIKey: 'chlog79r01qs8kipdd90chlog79r01qs8kipdd9g',
   firebase: {
     apiKey: 'AIzaSyBdPJJJZo6_T1U9J6sNjUit2mRy2ddOqA4',
     authDomain: 'stock-invest-simulator.firebaseapp.com',
