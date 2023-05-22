@@ -26,7 +26,7 @@ export class LoaderComponent implements OnInit {
         } else if (event instanceof NavigationEnd) {
           setTimeout(() => {
             this.loading = false;
-          }, 800); //
+          }, 500); //
         }
       });
   }

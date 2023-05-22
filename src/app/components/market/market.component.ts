@@ -17,14 +17,14 @@ export class MarketComponent {
   ngOnInit() {
     this.trendingStocksSubscription = this.stockService
       .getTrendingStocks()
-      .subscribe(
-        (stocks) => {
+      .subscribe({
+        next: (stocks) => {
           this.trendingStocks = stocks;
         },
-        (error) => {
+        error: (error) => {
           console.log('Error retrieving trending stocks:', error);
-        }
-      );
+        },
+      });
   }
 
   ngOnDestroy() {
