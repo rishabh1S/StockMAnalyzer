@@ -1,4 +1,4 @@
-<header class="absolute inset-x-0 top-0">
+<header class="inset-x-0 top-0">
     <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div class="flex lg:flex-1">
             <a href="#" class="-m-1.5 p-1.5">
@@ -123,42 +123,96 @@
     </nav>
 </header>
 
-<main class="mt-20">
-    <section class="px-4 sm:px-6 lg:px-8 py-8">
-        <div class="max-w-3xl mx-auto">
-            <!-- Quote Data -->
-            <div *ngIf="stockQuote" class="relative overflow-x-auto">
-                <caption class="caption-top text-center text-lg font-semibold mb-4">
-                    {{ stockQuote['01. symbol'] }}
-                </caption>
-                <table class="w-full text-sm text-left text-gray-500 border border-gray-300">
-                    <tr class="bg-white border-b">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            Open:</th>
-                        <td class="px-6 py-4">{{ stockQuote['02. open'] }}</td>
-                    </tr>
-                    <tr class="bg-white border-b">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            High:</th>
-                        <td class="px-6 py-4">{{ stockQuote['03. high'] }}</td>
-                    </tr>
-                    <tr class="bg-white border-b">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            Low:</th>
-                        <td class="px-6 py-4">{{ stockQuote['04. low'] }}</td>
-                    </tr>
-                    <tr class="bg-white border-b">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            Price:</th>
-                        <td class="px-6 py-4">{{ stockQuote['05. price'] }}</td>
-                    </tr>
-                    <tr class="bg-white border-b">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            Volume:</th>
-                        <td class="px-6 py-4">{{ stockQuote['06. volume'] }}</td>
-                    </tr>
-                </table>
+<div class="mt-20 flex justify-center items-center">
+    <ul class="inline-flex -space-x-px">
+        <li> <a
+                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1
+                min</a> </li>
+        <li> <a
+                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5
+                min</a> </li>
+        <li> <a
+                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">15
+                min</a> </li>
+        <li> <a aria-current="page"
+                class="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">30
+                min</a> </li>
+        <li> <a
+                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">60
+                min</a> </li>
+        <li> <a
+                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Day</a>
+        </li>
+        <li> <a
+                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Week</a>
+        </li>
+        <li> <a
+                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Month</a>
+        </li>
+    </ul>
+</div>
+
+<main class="mt-10">
+    <div class="min-w-screen flex items-center justify-center px-5 py-5">
+        <div class="rounded shadow-xl overflow-hidden w-full md:flex" style="max-width:900px">
+            <div class="flex w-full md:w-1/2 p-10 bg-gray-100 text-gray-600 items-center">
+                <div class="w-full" *ngIf="stockQuote">
+                    <h3 class="text-lg font-semibold leading-tight text-gray-800">{{selectedStockName}}</h3>
+                    <h6 class="text-sm leading-tight mb-2">
+                        <span>{{ stockQuote['01. symbol']
+                            }}</span>&nbsp;&nbsp;-&nbsp;&nbsp;{{ currentDateTime }}
+                    </h6>
+                    <div class="flex w-full items-end mb-6">
+                        <span class="block leading-none text-3xl text-gray-800">{{ (+stockQuote['05. price']).toFixed(3)
+                            }}</span>
+                        <span class="block leading-5 text-sm ml-4"
+                            [ngClass]="{ 'text-red-500': stockQuote['09. change'] < 0, 'text-green-500': stockQuote['09. change'] >= 0 }">
+                            <ng-container *ngIf="stockQuote['09. change'] < 0">▼</ng-container>
+                            <ng-container *ngIf="stockQuote['09. change'] >= 0">▲</ng-container>
+                            {{ (+stockQuote['09. change']).toFixed(3) }}
+                            ({{ stockQuote['10. change percent'] }})
+                        </span>
+                    </div>
+                    <div class="flex w-full text-xs">
+                        <div class="flex w-5/12">
+                            <div class="flex-1 pr-3 text-left font-semibold">Open</div>
+                            <div class="flex-1 px-3 text-right">{{ (+stockQuote['02. open']).toFixed(3)
+                                }}</div>
+                        </div>
+                        <div class="flex w-7/12">
+                            <div class="flex-1 px-3 text-left font-semibold">Volume</div>
+                            <div class="flex-1 pl-3 text-right">{{ (+stockQuote['06. volume']).toFixed(3)
+                                }}</div>
+                        </div>
+                    </div>
+                    <div class="flex w-full text-xs">
+                        <div class="flex w-5/12">
+                            <div class="flex-1 pr-3 text-left font-semibold">High</div>
+                            <div class="px-3 text-right">{{ (+stockQuote['03. high']).toFixed(3)
+                                }}</div>
+                        </div>
+                        <div class="flex w-7/12">
+                            <div class="flex-1 px-3 text-left font-semibold">Market Open</div>
+                            <div class="pl-3 text-right">{{ selectedStockMarketOpen }}</div>
+                        </div>
+                    </div>
+                    <div class="flex w-full text-xs">
+                        <div class="flex w-5/12">
+                            <div class="flex-1 pr-3 text-left font-semibold">Low</div>
+                            <div class="px-3 text-right">{{ (+stockQuote['04. low']).toFixed(3)
+                                }}</div>
+                        </div>
+                        <div class="flex w-7/12">
+                            <div class="flex-1 px-3 text-left font-semibold">Market Close</div>
+                            <div class="pl-3 text-right">{{ selectedStockMarketClose }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex w-full md:w-1/2 px-5 pb-4 pt-8 bg-indigo-500 text-white items-center"
+                x-data="{ stockTicker: stockTicker }" x-init="stockTicker.renderChart()">
+                <app-chart></app-chart>
             </div>
         </div>
-    </section>
+    </div>
 </main>

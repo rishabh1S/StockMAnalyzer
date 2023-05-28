@@ -26,6 +26,7 @@ import { HelpSupportComponent } from './components/help-support/help-support.com
 import { FooterComponent } from './components/footer/footer.component';
 import { FeatureComponent } from './components/feature/feature.component';
 import { MarketComponent } from './components/market/market.component';
+import { ChartComponent } from './components/chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { MarketComponent } from './components/market/market.component';
     FooterComponent,
     FeatureComponent,
     MarketComponent,
+    ChartComponent,
   ],
   imports: [
     BrowserModule,

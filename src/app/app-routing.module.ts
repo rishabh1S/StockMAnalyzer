@@ -7,6 +7,7 @@ import { MainComponent } from './components/main/main.component';
 
 import { NgModule } from '@angular/core';
 import { AboutComponent } from './components/about/about.component';
+import { ChartComponent } from './components/chart/chart.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'main', component: MainComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'chart', component: ChartComponent },
   // Add other routes as needed
 ];
 
