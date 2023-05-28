@@ -13,29 +13,29 @@
                 <tr class="border-b border-gray-600">
                     <td class="py-2 font-bold text-xl">
                         <div class="flex items-center sm:justify-center">
-                            <span>{{ trendingStocks[0].name.split(' ').slice(0, 2).join(' ') }}</span>
-                            <span class="text-gray-400 pl-1">{{ trendingStocks[0].symbol }}</span>
+                            <span>{{ getStockName(0) }}</span>
+                            <span class="text-gray-400 pl-1">{{ getStockSymbol(0)}}</span>
                         </div>
                     </td>
                     <td class="py-2 font-bold text-xl">
                         <div class="flex items-center sm:justify-center">
-                            $ {{ trendingStocks[0].c.toLocaleString() }}
+                            $ {{ getStockPrice(0) }}
                         </div>
                     </td>
-                    <td [ngClass]="{ 'text-red-500': trendingStocks[0].dp < 0, 'text-green-500': trendingStocks[0].dp >= 0 }"
+                    <td [ngClass]="{ 'text-red-500': getStockPercentage(0) < 0, 'text-green-500': getStockPercentage(0) >= 0 }"
                         class="py-2 text-red-500 font-bold">
                         <div class="flex items-centre sm:justify-center">
-                            {{ trendingStocks[0].dp }}%
+                            {{ getStockPercentage(0) }}%
                         </div>
                     </td>
                     <td class="py-2 font-bold">
                         <div class="flex items-centre sm:justify-center">
-                            ${{ trendingStocks[0].mc.toLocaleString() }}
+                            ${{ getMarketCap(0) }}
                         </div>
                     </td>
                     <td class="py-2">
                         <div class="flex items-centre sm:justify-center">
-                            <button
+                            <button routerLink="/login"
                                 class="text-white bg-blue-600 hover:bg-blue-700 py-1 px-3 rounded-full hidden sm:inline-block">Explore
                                 <span aria-hidden="true">&rarr;</span></button>
                         </div>
@@ -44,29 +44,29 @@
                 <tr class="border-b border-gray-600">
                     <td class="py-2 font-bold text-xl">
                         <div class="flex items-center sm:justify-center">
-                            <span>{{ trendingStocks[1].name.split(' ').slice(0, 2).join(' ') }}</span>
-                            <span class="text-gray-400 pl-1">{{ trendingStocks[1].symbol }}</span>
+                            <span>{{ getStockName(1) }}</span>
+                            <span class="text-gray-400 pl-1">{{ getStockSymbol(1) }}</span>
                         </div>
                     </td>
                     <td class="py-2 font-bold text-xl">
                         <div class="flex items-center sm:justify-center">
-                            ${{ trendingStocks[1].c.toLocaleString() }}
+                            $ {{ getStockPrice(1) }}
                         </div>
                     </td>
-                    <td [ngClass]="{ 'text-red-500': trendingStocks[1].dp < 0, 'text-green-500': trendingStocks[1].dp >= 0 }"
+                    <td [ngClass]="{ 'text-red-500': getStockPercentage(1) < 0, 'text-green-500': getStockPercentage(1) >= 0 }"
                         class="py-2 text-red-500 font-bold">
                         <div class="flex items-centre sm:justify-center">
-                            {{ trendingStocks[1].dp }}%
+                            {{ getStockPercentage(1) }}%
                         </div>
                     </td>
                     <td class="py-2 font-bold">
                         <div class="flex items-centre sm:justify-center">
-                            ${{ trendingStocks[1].mc.toLocaleString() }}
+                            ${{ getMarketCap(1) }}
                         </div>
                     </td>
                     <td class="py-2">
                         <div class="flex items-centre sm:justify-center">
-                            <button
+                            <button routerLink="/login"
                                 class="text-white bg-blue-600 hover:bg-blue-700 py-1 px-3 rounded-full hidden sm:inline-block">Explore
                                 <span aria-hidden="true">&rarr;</span></button>
                         </div>
@@ -75,29 +75,29 @@
                 <tr class="border-b border-gray-600">
                     <td class="py-2 font-bold text-xl">
                         <div class="flex items-center sm:justify-center">
-                            <span>{{ trendingStocks[2].name.split(' ').slice(0, 2).join(' ') }}</span>
-                            <span class="text-gray-400 pl-1">{{ trendingStocks[2].symbol }}</span>
+                            <span>{{ getStockName(2) }}</span>
+                            <span class="text-gray-400 pl-1">{{ getStockSymbol(2) }}</span>
                         </div>
                     </td>
                     <td class="py-2 font-bold text-xl">
                         <div class="flex items-center sm:justify-center">
-                            ${{ trendingStocks[2].c.toLocaleString() }}
+                            $ {{ getStockPrice(2) }}
                         </div>
                     </td>
-                    <td [ngClass]="{ 'text-red-500': trendingStocks[2].dp < 0, 'text-green-500': trendingStocks[2].dp >= 0 }"
+                    <td [ngClass]="{ 'text-red-500': getStockPercentage(2) < 0, 'text-green-500': getStockPercentage(2) >= 0 }"
                         class="py-2 text-red-500">
                         <div class="flex items-centre sm:justify-center font-bold">
-                            {{ trendingStocks[2].dp }}%
+                            {{ getStockPercentage(2) }}%
                         </div>
                     </td>
                     <td class="py-2 font-bold">
                         <div class="flex items-centre sm:justify-center">
-                            ${{ trendingStocks[2].mc.toLocaleString() }}
+                            ${{ getMarketCap(2) }}
                         </div>
                     </td>
                     <td class="py-2">
                         <div class="flex items-centre sm:justify-center">
-                            <button
+                            <button routerLink="/login"
                                 class="text-white bg-blue-600 hover:bg-blue-700 py-1 px-3 rounded-full hidden sm:inline-block">Explore
                                 <span aria-hidden="true">&rarr;</span></button>
                         </div>
@@ -106,29 +106,29 @@
                 <tr class="border-b border-gray-600">
                     <td class="py-2 font-bold text-xl">
                         <div class="flex items-center sm:justify-center">
-                            <span>{{ trendingStocks[3].name.split(' ').slice(0, 2).join(' ') }}</span>
-                            <span class="text-gray-400 pl-1">{{ trendingStocks[3].symbol }}</span>
+                            <span>{{ getStockName(3) }}</span>
+                            <span class="text-gray-400 pl-1">{{ getStockSymbol(3) }}</span>
                         </div>
                     </td>
                     <td class="py-2 font-bold text-xl">
                         <div class="flex items-center sm:justify-center">
-                            ${{ trendingStocks[3].c.toLocaleString() }}
+                            $ {{ getStockPrice(3) }}
                         </div>
                     </td>
-                    <td [ngClass]="{ 'text-red-500': trendingStocks[3].dp < 0, 'text-green-500': trendingStocks[3].dp >= 0 }"
+                    <td [ngClass]="{ 'text-red-500': getStockPercentage(3) < 0, 'text-green-500': getStockPercentage(3) >= 0 }"
                         class="py-2 text-red-500 font-bold">
                         <div class="flex items-centre sm:justify-center">
-                            {{ trendingStocks[3].dp }}%
+                            {{ getStockPercentage(3) }}%
                         </div>
                     </td>
                     <td class="py-2 font-bold">
                         <div class="flex items-centre sm:justify-center">
-                            ${{ trendingStocks[3].mc.toLocaleString() }}
+                            ${{ getMarketCap(3) }}
                         </div>
                     </td>
                     <td class="py-2">
                         <div class="flex items-centre sm:justify-center">
-                            <button
+                            <button routerLink="/login"
                                 class="text-white bg-blue-600 hover:bg-blue-700 py-1 px-3 rounded-full hidden sm:inline-block">Explore
                                 <span aria-hidden="true">&rarr;</span></button>
                         </div>
@@ -137,24 +137,24 @@
                 <tr class="border-b border-gray-600">
                     <td class="py-2 font-bold text-xl">
                         <div class="flex items-center sm:justify-center">
-                            <span>{{ trendingStocks[4].name.split(' ').slice(0, 2).join(' ') }}</span>
-                            <span class="text-gray-400 pl-1">{{ trendingStocks[4].symbol }}</span>
+                            <span>{{ getStockName(4) }}</span>
+                            <span class="text-gray-400 pl-1">{{ getStockSymbol(4) }}</span>
                         </div>
                     </td>
                     <td class="py-2 font-bold text-xl">
                         <div class="flex items-center sm:justify-center">
-                            ${{ trendingStocks[4].c.toLocaleString() }}
+                            $ {{ getStockPrice(4) }}
                         </div>
                     </td>
-                    <td [ngClass]="{ 'text-red-500': trendingStocks[4].dp < 0, 'text-green-500': trendingStocks[4].dp >= 0 }"
+                    <td [ngClass]="{ 'text-red-500': getStockPercentage(4) < 0, 'text-green-500': getStockPercentage(4) >= 0 }"
                         class="py-2 text-red-500 font-bold">
                         <div class="flex items-centre sm:justify-center">
-                            {{ trendingStocks[4].dp }}%
+                            {{ getStockPercentage(4) }}%
                         </div>
                     </td>
                     <td class="py-2 font-bold">
                         <div class="flex items-centre sm:justify-center">
-                            ${{ trendingStocks[4].mc.toLocaleString() }}
+                            ${{ getMarketCap(4) }}
                         </div>
                     </td>
                     <td class="py-2">

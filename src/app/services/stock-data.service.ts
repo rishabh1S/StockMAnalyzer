@@ -7,21 +7,32 @@ import {
   switchMap,
   interval,
   startWith,
+  BehaviorSubject,
+  Subject,
 } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StockDataService {
-  getSymbolSearchObservable() {}
-
   //Alpha Vantage
-  private apiBaseUrl = 'https://www.alphavantage.co';
-  private vantageAPIKey: string = environment.VantageAPIKey;
+  private vantageApiBaseUrl = 'https://www.alphavantage.co';
+  private vantageAPIKey1: string = environment.VantageAPIKey1;
+  private vantageAPIKey2: string = environment.VantageAPIKey2;
+
+  //Twelve Data
+  private twelveDataApiBaseUrl = 'https://twelve-data1.p.rapidapi.com';
+  private twelveDataAPIKey: string = environment.TwelveDataAPIKey;
 
   //Finnhub
   private finnhubAPIKey: string = environment.FinnhubAPIKey;
+
+  private selectedSymbolSubject: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
+
+  private unsubscribe$ = new Subject<void>();
 
   constructor(private http: HttpClient) {}
 
@@ -29,20 +40,53 @@ export class StockDataService {
     return new HttpHeaders();
   }
 
+  getSymbolSearchObservable(): Observable<string> {
+    return this.selectedSymbolSubject.asObservable();
+  }
+
   searchStocks(keywords: string): Observable<any> {
-    const url = `${this.apiBaseUrl}/query?function=SYMBOL_SEARCH&keywords=${keywords}&apikey=${this.vantageAPIKey}`;
+    const url = `${this.vantageApiBaseUrl}/query?function=SYMBOL_SEARCH&keywords=${keywords}&apikey=${this.vantageAPIKey1}`;
     return this.http.get(url, { headers: this.getHeaders() });
   }
 
   getStockQuote(symbol: string): Observable<any> {
-    const url = `${this.apiBaseUrl}/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${this.vantageAPIKey}`;
+    const url = `${this.vantageApiBaseUrl}/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${this.vantageAPIKey1}`;
     return this.http.get(url, { headers: this.getHeaders() });
   }
 
+  fetchStockData(symbol: string, interval: string): Observable<any> {
+    let functionParam: string;
+    switch (interval) {
+      case '1min':
+        functionParam = 'TIME_SERIES_INTRADAY&interval=1min';
+        break;
+      case '30min':
+        functionParam = 'TIME_SERIES_INTRADAY&interval=30min';
+        break;
+      case 'Daily':
+        functionParam = 'TIME_SERIES_DAILY_ADJUSTED';
+        break;
+      case 'Weekly':
+        functionParam = 'TIME_SERIES_WEEKLY_ADJUSTED';
+        break;
+      case 'Monthly':
+        functionParam = 'TIME_SERIES_MONTHLY_ADJUSTED';
+        break;
+      default:
+        // Default to Intraday with Daily interval
+        functionParam = 'TIME_SERIES_DAILY_ADJUSTED';
+        break;
+    }
+
+    const url = `https://www.alphavantage.co/query?function=${functionParam}&symbol=${symbol}&apikey=${this.vantageAPIKey2}`;
+    return this.http.get(url);
+  }
+
+  // Market Page
   getTrendingStocks(): Observable<any> {
     const trendingStocksUrl = `https://finnhub.io/api/v1/stock/symbol?exchange=US&token=${this.finnhubAPIKey}`;
 
-    return interval(7000).pipe(
+    return interval(10000).pipe(
       startWith(0),
       switchMap(() => this.http.get<any[]>(trendingStocksUrl)),
       switchMap((symbols: any[]) => {
@@ -60,12 +104,17 @@ export class StockDataService {
               dp: quote.dp,
               mc: profile.marketCapitalization,
               name: profile.name,
-            }))
+            })),
+            takeUntil(this.unsubscribe$)
           );
         });
 
         return forkJoin(symbolPromises);
       })
     );
+  }
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
