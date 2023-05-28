@@ -1,5 +1,4 @@
 export const defaultEnvironment = {
-  production: false,
   VantageAPIKey1: '0NFNFJCGIC9WXGWW',
   VantageAPIKey2: 'CQFYV4PV9SGDBSZU',
   FinnhubAPIKey: 'chlog79r01qs8kipdd90chlog79r01qs8kipdd9g',
