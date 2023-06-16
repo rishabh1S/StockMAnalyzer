@@ -1,7 +1,14 @@
-<section class="min-h-screen" id="landing">
-    <div class="bg-white">
-        <header class="inset-x-0 w-full top-0 z-10">
-            <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+<section class="min-h-screen flex items-center justify-center" id="landing">
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+        <video autoplay loop muted class="object-cover object-center w-full h-full">
+            <source src="../../../assets/landingVideo.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 -z-5 bg-indigo-950 opacity-50"></div>
+    </div>
+    <div class="relative z-10">
+        <header [ngClass]="{'drop-shadow-md': shouldApplyDropShadow}"
+            class="fixed inset-x-0 top-0 bg-white border-b border-gray-200">
+            <nav class="flex items-center justify-between p-1 px-8" aria-label="Global">
                 <div class="flex lg:flex-1">
                     <a href="#landing" class="flex items-center">
                         <svg width="100" height="60" viewBox="0 0 369.89473684210526 206.53620445271827"
@@ -112,26 +119,39 @@
             </div>
         </header>
         <div
-            class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
-            <img class="hidden md:block"
-                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup-dark.svg"
-                alt="dashboard image">
+            class="z-10 gap-8 items-center py-8 px-4 max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-24 lg:px-6">
             <div class="mt-4 md:mt-0">
-                <h1 class="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4"
+                <h1 class="my-10 text-5xl md:text-7xl text-gray-100 font-bold sm:tracking-tight mb-4"
                     data-aos="zoom-y-out"> Welcome to the Stock Market <span
                         class="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-purple-600">Analyser</span>
                 </h1>
-                <div class="max-w-6xl mx-auto">
-                    <p class="text-xl text-gray-700 mb-8" data-aos="zoom-y-out" data-aos-delay="150">Analyze stocks like
-                        a pro with our powerful web app.<br> Start maximizing your investments today!</p>
+                <div class="max-w-6xl pt-6">
+                    <p class="text-lg text-justify text-gray-100 mb-8" data-aos="zoom-y-out" data-aos-delay="150">
+                        Unlock the
+                        full
+                        potential of stock analysis with our cutting-edge web application, empowering you to
+                        navigate the markets like a seasoned pro. Gain valuable insights and make informed
+                        investment decisions effortlessly. Get started today and embark on a journey of maximizing
+                        your
+                        investments for long-term success!</p>
                     <div class="flex flex-col justify-start button-container md:flex-row" data-aos="zoom-y-out"
                         data-aos-delay="300">
                         <div class="flex justify-start button-container">
-                            <a routerLink="/register"
-                                class="btn text-white bg-blue-600 hover:bg-blue-700 py-2 px-5 m-2 rounded-full">Sign
-                                Up</a>
-                            <a routerLink="/login"
-                                class="btn text-white bg-gray-900 hover:bg-gray-800 py-2 px-5 m-2 rounded-full">Login</a>
+                            <a routerLink="/register" class="text-white hover:text-gray-300 my-2 flex items-center">
+                                <svg class="w-8 mr-2" viewBox="0 0 38 38" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path opacity="0.4" fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M19 37C9.05887 37 1 28.9411 1 19C1 9.05887 9.05887 1 19 1C28.9411 1 37 9.05887 37 19C37 28.9411 28.9411 37 19 37Z"
+                                        stroke="#FFFFFF"></path>
+                                    <path
+                                        d="M21.9657 12L28.9287 18.963L21.9657 25.926L20.7348 24.7193L25.6203 19.8334L10.0001 19.8334V18.0926L25.5966 18.0926L20.7348 13.2309L21.9657 12Z"
+                                        fill="#FFFFFF"></path>
+                                    <path
+                                        d="M21.9657 12L28.9287 18.963L21.9657 25.926L20.7348 24.7193L25.6203 19.8334L10.0001 19.8334V18.0926L25.5966 18.0926L20.7348 13.2309L21.9657 12Z"
+                                        fill="#FFFFFF"></path>
+                                </svg>
+                                <span class="text-lg font-semibold">Sign Up</span>
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -29,7 +29,10 @@ export class MarketComponent implements OnInit, OnDestroy {
 
   getStockName(index: number): string {
     if (this.trendingStocks[index]) {
-      return this.trendingStocks[index].name.split(' ').slice(0, 2).join(' ');
+      const name = this.trendingStocks[index].name;
+      return name !== undefined
+        ? name.split(' ').slice(0, 2).join(' ')
+        : 'Not Available';
     } else {
       return 'Not Available';
     }
@@ -53,7 +56,8 @@ export class MarketComponent implements OnInit, OnDestroy {
 
   getStockPercentage(index: number): number {
     if (this.trendingStocks[index]) {
-      return this.trendingStocks[index].dp || 0;
+      const dp = this.trendingStocks[index].dp;
+      return dp !== null ? dp.toFixed(2) : 0;
     } else {
       return 0;
     }
@@ -61,7 +65,8 @@ export class MarketComponent implements OnInit, OnDestroy {
 
   getMarketCap(index: number): number {
     if (this.trendingStocks[index]) {
-      return this.trendingStocks[index].mc.toLocaleString() || 0;
+      const mc = this.trendingStocks[index].mc;
+      return mc !== undefined ? mc.toLocaleString() : 0;
     } else {
       return 0;
     }

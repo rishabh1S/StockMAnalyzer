@@ -1,4 +1,16 @@
-<section class="relative bg-gray-900 text-white min-h-screen">
+<section class="relative isolate overflow-hidden bg-gray-900 text-white min-h-screen">
+    <div class="hidden sm:absolute sm:-top-10 sm:right-1/2 sm:-z-10 sm:mr-10 sm:block sm:transform-gpu sm:blur-3xl"
+        aria-hidden="true">
+        <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-tr from-[#ff4694] to-[#776fff] opacity-20"
+            style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+        </div>
+    </div>
+    <div class="absolute -top-52 left-1/2 -z-10 -translate-x-1/2 transform-gpu blur-3xl sm:top-[-28rem] sm:ml-16 sm:translate-x-0 sm:transform-gpu"
+        aria-hidden="true">
+        <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-tr from-[#ff4694] to-[#776fff] opacity-20"
+            style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+        </div>
+    </div>
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
         <div class="max-w-screen-md mb-8 lg:mb-16">
             <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white">Discover Top Trending Stocks</h2>
@@ -11,24 +23,24 @@
         <table class="w-full">
             <tbody>
                 <tr class="border-b border-gray-600">
-                    <td class="py-2 font-bold text-xl">
-                        <div class="flex items-center sm:justify-center">
+                    <td class="py-2 font-bold text-sm sm:text-xl">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-center">
                             <span>{{ getStockName(0) }}</span>
                             <span class="text-gray-400 pl-1">{{ getStockSymbol(0)}}</span>
                         </div>
                     </td>
-                    <td class="py-2 font-bold text-xl">
+                    <td class="py-2 font-bold text-sm sm:text-xl">
                         <div class="flex items-center sm:justify-center">
-                            $ {{ getStockPrice(0) }}
+                            ${{ getStockPrice(0) }}
                         </div>
                     </td>
                     <td [ngClass]="{ 'text-red-500': getStockPercentage(0) < 0, 'text-green-500': getStockPercentage(0) >= 0 }"
-                        class="py-2 text-red-500 font-bold">
+                        class="py-2 text-red-500 font-bold text-sm sm:text-xl">
                         <div class="flex items-centre sm:justify-center">
                             {{ getStockPercentage(0) }}%
                         </div>
                     </td>
-                    <td class="py-2 font-bold">
+                    <td class="py-2 font-bold text-sm sm:text-xl">
                         <div class="flex items-centre sm:justify-center">
                             ${{ getMarketCap(0) }}
                         </div>
@@ -42,24 +54,24 @@
                     </td>
                 </tr>
                 <tr class="border-b border-gray-600">
-                    <td class="py-2 font-bold text-xl">
-                        <div class="flex items-center sm:justify-center">
+                    <td class="py-2 font-bold text-sm sm:text-xl">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-center">
                             <span>{{ getStockName(1) }}</span>
                             <span class="text-gray-400 pl-1">{{ getStockSymbol(1) }}</span>
                         </div>
                     </td>
-                    <td class="py-2 font-bold text-xl">
+                    <td class="py-2 font-bold text-sm sm:text-xl">
                         <div class="flex items-center sm:justify-center">
-                            $ {{ getStockPrice(1) }}
+                            ${{ getStockPrice(1) }}
                         </div>
                     </td>
                     <td [ngClass]="{ 'text-red-500': getStockPercentage(1) < 0, 'text-green-500': getStockPercentage(1) >= 0 }"
-                        class="py-2 text-red-500 font-bold">
+                        class="py-2 text-red-500 font-bold text-sm sm:text-xl">
                         <div class="flex items-centre sm:justify-center">
                             {{ getStockPercentage(1) }}%
                         </div>
                     </td>
-                    <td class="py-2 font-bold">
+                    <td class="py-2 font-bold text-sm sm:text-xl">
                         <div class="flex items-centre sm:justify-center">
                             ${{ getMarketCap(1) }}
                         </div>
@@ -73,24 +85,24 @@
                     </td>
                 </tr>
                 <tr class="border-b border-gray-600">
-                    <td class="py-2 font-bold text-xl">
-                        <div class="flex items-center sm:justify-center">
+                    <td class="py-2 font-bold text-sm sm:text-xl">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-center">
                             <span>{{ getStockName(2) }}</span>
                             <span class="text-gray-400 pl-1">{{ getStockSymbol(2) }}</span>
                         </div>
                     </td>
-                    <td class="py-2 font-bold text-xl">
+                    <td class="py-2 font-bold text-sm sm:text-xl">
                         <div class="flex items-center sm:justify-center">
-                            $ {{ getStockPrice(2) }}
+                            ${{ getStockPrice(2) }}
                         </div>
                     </td>
                     <td [ngClass]="{ 'text-red-500': getStockPercentage(2) < 0, 'text-green-500': getStockPercentage(2) >= 0 }"
                         class="py-2 text-red-500">
-                        <div class="flex items-centre sm:justify-center font-bold">
+                        <div class="flex items-centre sm:justify-center font-bold text-sm sm:text-xl">
                             {{ getStockPercentage(2) }}%
                         </div>
                     </td>
-                    <td class="py-2 font-bold">
+                    <td class="py-2 font-bold text-sm sm:text-xl">
                         <div class="flex items-centre sm:justify-center">
                             ${{ getMarketCap(2) }}
                         </div>
@@ -104,24 +116,24 @@
                     </td>
                 </tr>
                 <tr class="border-b border-gray-600">
-                    <td class="py-2 font-bold text-xl">
-                        <div class="flex items-center sm:justify-center">
+                    <td class="py-2 font-bold text-sm sm:text-xl">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-center">
                             <span>{{ getStockName(3) }}</span>
                             <span class="text-gray-400 pl-1">{{ getStockSymbol(3) }}</span>
                         </div>
                     </td>
-                    <td class="py-2 font-bold text-xl">
+                    <td class="py-2 font-bold text-sm sm:text-xl">
                         <div class="flex items-center sm:justify-center">
-                            $ {{ getStockPrice(3) }}
+                            ${{ getStockPrice(3) }}
                         </div>
                     </td>
                     <td [ngClass]="{ 'text-red-500': getStockPercentage(3) < 0, 'text-green-500': getStockPercentage(3) >= 0 }"
-                        class="py-2 text-red-500 font-bold">
+                        class="py-2 text-red-500 font-bold text-sm sm:text-xl">
                         <div class="flex items-centre sm:justify-center">
                             {{ getStockPercentage(3) }}%
                         </div>
                     </td>
-                    <td class="py-2 font-bold">
+                    <td class="py-2 font-bold text-sm sm:text-xl">
                         <div class="flex items-centre sm:justify-center">
                             ${{ getMarketCap(3) }}
                         </div>
@@ -135,24 +147,24 @@
                     </td>
                 </tr>
                 <tr class="border-b border-gray-600">
-                    <td class="py-2 font-bold text-xl">
-                        <div class="flex items-center sm:justify-center">
+                    <td class="py-2 font-bold text-sm sm:text-xl">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-center">
                             <span>{{ getStockName(4) }}</span>
                             <span class="text-gray-400 pl-1">{{ getStockSymbol(4) }}</span>
                         </div>
                     </td>
-                    <td class="py-2 font-bold text-xl">
+                    <td class="py-2 font-bold text-sm sm:text-xl">
                         <div class="flex items-center sm:justify-center">
-                            $ {{ getStockPrice(4) }}
+                            ${{ getStockPrice(4) }}
                         </div>
                     </td>
                     <td [ngClass]="{ 'text-red-500': getStockPercentage(4) < 0, 'text-green-500': getStockPercentage(4) >= 0 }"
-                        class="py-2 text-red-500 font-bold">
+                        class="py-2 text-red-500 font-bold text-sm sm:text-xl">
                         <div class="flex items-centre sm:justify-center">
                             {{ getStockPercentage(4) }}%
                         </div>
                     </td>
-                    <td class="py-2 font-bold">
+                    <td class="py-2 font-bold text-sm sm:text-xl">
                         <div class="flex items-centre sm:justify-center">
                             ${{ getMarketCap(4) }}
                         </div>

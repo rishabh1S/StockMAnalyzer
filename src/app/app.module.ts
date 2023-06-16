@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,15 +16,16 @@ import { MainComponent } from './components/main/main.component';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AboutComponent } from './components/about/about.component';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 import { HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from './components/loader/loader.component';
-import { SettingsComponent } from './components/settings/settings.component';
+import { AboutComponent } from './components/about/about.component';
 import { HelpSupportComponent } from './components/help-support/help-support.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FeatureComponent } from './components/feature/feature.component';
 import { MarketComponent } from './components/market/market.component';
+import { NewsComponent } from './components/news/news.component';
 
 @NgModule({
   declarations: [
@@ -36,11 +36,11 @@ import { MarketComponent } from './components/market/market.component';
     MainComponent,
     AboutComponent,
     LoaderComponent,
-    SettingsComponent,
     HelpSupportComponent,
     FooterComponent,
     FeatureComponent,
     MarketComponent,
+    NewsComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +51,7 @@ import { MarketComponent } from './components/market/market.component';
     RouterModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    AngularFirestoreModule,
     HttpClientModule,
     FontAwesomeModule,
   ],

@@ -19,7 +19,7 @@
             <h1 class="text-gray-800 font-bold text-2xl mb-1">Welcome Back!</h1>
             <p class="text-sm font-normal text-gray-600 mb-7">To keep connected with us, please login with your personal
                 details</p>
-            <div class="flex items-center border-2 py-1 px-3 rounded-2xl mb-4 focus-within:border-black">
+            <div class="flex items-center border-2 py-1 px-3 rounded-2xl mb-4 focus-within:border-blue-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -28,7 +28,8 @@
                 <input class="pl-2 outline-none border-none w-full focus:ring-0" type="text" name="email" id="email"
                     placeholder="Email Address" [(ngModel)]="email" required />
             </div>
-            <div class="flex items-center border-2 py-1 px-3 rounded-2xl focus-within:border-black">
+            <div class="flex items-center border-2 py-1 px-3 rounded-2xl"
+                [ngClass]="{'focus-within:border-blue-600': !loginFailed, 'border-red-600': loginFailed}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
                     fill="currentColor">
                     <path fill-rule="evenodd"
@@ -38,12 +39,13 @@
                 <input class="pl-2 outline-none border-none w-full focus:ring-0"
                     [type]="isPasswordVisible ? 'text' : 'password'" name="password" id="password"
                     placeholder="Password" [(ngModel)]="password" required />
-                <button class="focus:outline-none" (click)="togglePasswordVisibility()">
+                <button type="button" class="focus:outline-none" (click)="togglePasswordVisibility()">
                     <fa-icon [icon]=" isPasswordVisible ? faEyeSlash : faEye" class="text-gray-400"></fa-icon>
                 </button>
             </div>
             <div class="text-right mt-2">
-                <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+                <button class="font-semibold text-indigo-600 hover:text-indigo-500" (click)="resetPassword()">Forgot
+                    password?</button>
             </div>
             <button type="submit"
                 class="block w-full bg-indigo-600 hover:bg-purple-700 mt-4 py-2 rounded-2xl text-white font-semibold mb-2 hover:cursor-pointer"
@@ -76,6 +78,41 @@
                 </div>
             </button>
         </form>
-
     </div>
+
+    <div class="fixed inset-x-0 top-16 flex items-center justify-center pointer-events-none">
+        <div id="toast-container" class="relative w-full max-w-xs mx-auto">
+            <div #successToast id="toast-success"
+                class="hidden absolute hide-toast left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center w-max max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow"
+                role="alert">
+                <div
+                    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Check icon</span>
+                </div>
+                <div class="ml-3 text-sm font-normal">Password reset email sent</div>
+            </div>
+            <div #dangerToast id="toast-danger"
+                class="hidden absolute hide-toast left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center w-max max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow"
+                role="alert">
+                <div
+                    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Error icon</span>
+                </div>
+                <div class="ml-3 text-sm font-normal">Email not registered!</div>
+            </div>
+        </div>
+    </div>
+
 </div>

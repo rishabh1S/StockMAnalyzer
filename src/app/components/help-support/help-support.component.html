@@ -1,28 +1,40 @@
-<section class="relative bg-white min-h-screen">
+<section class="relative isolate overflow-hidden bg-white min-h-screen">
+    <div class="hidden sm:absolute sm:-top-10 sm:right-1/2 sm:-z-10 sm:mr-10 sm:block sm:transform-gpu sm:blur-3xl"
+        aria-hidden="true">
+        <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-tr from-[#ff4694] to-[#776fff] opacity-20"
+            style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+        </div>
+    </div>
+    <div class="absolute -top-52 left-1/2 -z-10 -translate-x-1/2 transform-gpu blur-3xl sm:top-[-28rem] sm:ml-16 sm:translate-x-0 sm:transform-gpu"
+        aria-hidden="true">
+        <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-tr from-[#ff4694] to-[#776fff] opacity-20"
+            style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+        </div>
+    </div>
     <div class="py-8 lg:py-12 px-4 mx-auto max-w-screen-md">
         <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900">Contact Us
         </h2>
         <p class="mb-8 lg:mb-16 font-light text-center text-gray-500 sm:text-xl">Have a specific
             question or need personalized assistance? Reach out to us. We
             strive to respond promptly and provide you with the help you need.</p>
-        <form action="#" class="space-y-8">
+        <form (ngSubmit)="onSubmit(form)" class="space-y-8" #form="ngForm">
             <div>
                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Your
-                    email</label>
-                <input type="email" id="email"
-                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 "
-                    placeholder="name@gmail.com" required>
+                    email <span class="text-red-500 text-base">*</span></label>
+                <input type="email" id="email" [(ngModel)]="email" name="email"
+                    class="form-input shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                    placeholder="name@gmail.com" required (input)="removeErrorClass('email')">
             </div>
             <div>
                 <label for="subject" class="block mb-2 text-sm font-medium text-gray-900">Subject</label>
-                <input type="text" id="subject"
+                <input type="text" id="subject" [(ngModel)]="subject" name="subject"
                     class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500"
                     placeholder="Let us know how we can help you" required>
             </div>
             <div class="sm:col-span-2">
                 <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Your
                     message</label>
-                <textarea id="message" rows="6"
+                <textarea id="message" rows="6" [(ngModel)]="message" name="message"
                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500"
                     placeholder="Leave a comment..."></textarea>
             </div>
@@ -30,4 +42,40 @@
                 message</button>
         </form>
     </div>
+
+    <div class="fixed inset-x-0 top-28 flex items-center justify-center pointer-events-none">
+        <div id="toast-container" class="relative w-full max-w-xs mx-auto">
+            <div id="toast-success"
+                class="hidden absolute hide-toast left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center w-max max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow"
+                role="alert">
+                <div
+                    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Check icon</span>
+                </div>
+                <div class="ml-3 text-sm font-normal">Form submitted successfully.</div>
+            </div>
+            <div id="toast-danger"
+                class="hidden absolute hide-toast left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center w-max max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow"
+                role="alert">
+                <div
+                    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Error icon</span>
+                </div>
+                <div class="ml-3 text-sm font-normal">Submission failed. Please retry.</div>
+            </div>
+        </div>
+    </div>
+
 </section>

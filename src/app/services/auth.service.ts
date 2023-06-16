@@ -27,7 +27,18 @@ export class AuthService {
     return this.afAuth.signInWithEmailAndPassword(email, password);
   }
 
-  logout(): Promise<void> {
+  // Check if the user is authenticated
+  isAuthenticated(): boolean {
+    return !!this.afAuth.currentUser;
+  }
+
+  // Get the current user
+  getCurrentUser() {
+    return this.afAuth.currentUser;
+  }
+
+  // Sign out the user
+  signOut(): Promise<void> {
     return this.afAuth.signOut();
   }
 }

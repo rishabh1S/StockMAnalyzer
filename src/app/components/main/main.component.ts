@@ -4,7 +4,9 @@ import {
   OnDestroy,
   ViewChild,
   ElementRef,
+  HostListener,
 } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 import { FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -12,14 +14,25 @@ import { StockDataService } from '../../services/stock-data.service';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js/auto';
 import 'chartjs-adapter-moment';
+import getSymbolFromCurrency from 'currency-symbol-map';
+import { format } from 'date-fns';
+import { enUS } from 'date-fns/locale';
 
 interface SearchResult {
   '1. symbol': string;
   '2. name': string;
+  '4. region': string;
   '5. marketOpen': string;
   '6. marketClose': string;
   '8. currency': string;
   // Add other properties if needed...
+}
+
+interface StockNews {
+  title: string;
+  source: string;
+  summary: string;
+  published: Date;
 }
 
 @Component({
@@ -32,21 +45,29 @@ export class MainComponent implements OnInit, OnDestroy {
   searchResults: SearchResult[] = [];
   stockQuote: any = null; // Store the stock quote information
   searchKeywords = new FormControl();
-  isDropdownOpen = false;
+  isDropdownOpen: boolean = false;
+  isSearchBarOpen: boolean = false;
+  showSearchBar = false;
   selectedIndex = -1;
-  selectedSymbol = '';
+  selectedSymbol: string = '';
   selectedStockName = '';
+  selectedStockCurrency = '';
   selectedStockMarketOpen = '';
   selectedStockMarketClose = '';
   searchSubscription: Subscription | undefined;
   currentDateTime: string = '';
+  lastRefreshedDate: string = '';
   chart: Chart | undefined;
   selectedInterval: string = 'Daily';
+  stockNews: StockNews[] = [];
+  shouldApplyDropShadow = false;
   @ViewChild('chartCanvas') chartCanvas!: ElementRef;
+  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
 
   constructor(
     private router: Router,
-    private stockDataService: StockDataService
+    private stockDataService: StockDataService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -67,10 +88,6 @@ export class MainComponent implements OnInit, OnDestroy {
           console.error('Error searching stocks:', error);
         },
       });
-    this.updateDateTime();
-    setInterval(() => {
-      this.updateDateTime();
-    }, 1000);
 
     this.stockDataService
       .fetchStockData(this.selectedSymbol, this.selectedInterval)
@@ -96,8 +113,10 @@ export class MainComponent implements OnInit, OnDestroy {
           },
         ],
       },
-
       options: {
+        responsive: true,
+        aspectRatio: 1.5, // Adjust the aspect ratio to make the chart taller
+        maintainAspectRatio: false, // Disable maintaining aspect ratio
         interaction: {
           intersect: false,
           mode: 'nearest',
@@ -113,45 +132,52 @@ export class MainComponent implements OnInit, OnDestroy {
         },
         scales: {
           x: {
-            type: 'timeseries', // Use 'timeseries' instead of 'time'
+            type: 'timeseries',
             time: {
               tooltipFormat: 'll',
               displayFormats: {
-                minute: 'MMM D, h:mm a',
+                minute: 'h:mm a',
                 hour: 'hA',
                 day: 'MMM D',
                 week: 'll',
-                month: 'MMM YYYY',
+                month: 'YYYY',
               },
             },
             ticks: {
               color: 'rgba(255, 255, 255, 1)',
               maxTicksLimit: 5,
+              padding: 10,
             },
             grid: {
-              display: true,
-              color: 'rgba(255, 255, 255, 0.1)',
+              display: true, // Set display to true to show grid markings
+              color: 'rgba(128, 128, 128, 1)',
+              drawOnChartArea: false,
+            },
+            border: {
+              color: 'rgba(128, 128, 128, 1)', // Set the color of the Y-axis line
+              width: 1,
             },
           },
           y: {
             ticks: {
               color: 'rgba(255, 255, 255, 1)',
+              padding: 10,
             },
             grid: {
-              display: false,
+              display: true,
+              color: 'rgba(255, 255, 255, 0.1)',
             },
-          },
-        },
-        layout: {
-          padding: {
-            right: 10, // Set right padding to 10
+            border: {
+              color: 'rgba(31, 41, 55, 1)', // Set the color of the Y-axis line
+              width: 1,
+            },
           },
         },
         elements: {
           line: {
             backgroundColor: 'rgba(255, 255, 255, 0.1)', // Set light white color for the area inside the line
             borderColor: 'rgba(255, 255, 255, 1)',
-            tension: 0.1,
+            tension: 0.5,
             fill: {
               target: 'origin', // Fill the area below the line to the x-axis
             },
@@ -165,64 +191,87 @@ export class MainComponent implements OnInit, OnDestroy {
     this.searchSubscription?.unsubscribe();
   }
 
-  updateDateTime(): void {
-    const currentDate = new Date();
-    const options: Intl.DateTimeFormatOptions = {
-      month: 'short',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: true,
-    };
-    const formatter = new Intl.DateTimeFormat('en-US', options);
-
-    const [
-      { value: month },
-      ,
-      { value: day },
-      ,
-      { value: hour },
-      { value: minute },
-      { value: dayPeriod },
-    ] = formatter.formatToParts(currentDate);
-    const daySuffix = this.getDaySuffix(day);
-    const amPm = Number(hour) <= 12 ? 'pm' : 'am';
-
-    const formattedDateTime = `${month} ${day}${daySuffix} ${hour}${minute}${dayPeriod}${amPm} IST`;
-    this.currentDateTime = formattedDateTime;
+  @HostListener('window:scroll')
+  onWindowScroll() {
+    this.shouldApplyDropShadow = window.scrollY > 0;
   }
 
-  getDaySuffix(day: string): string {
-    if (day.endsWith('1') && !day.endsWith('11')) {
-      return 'st';
-    } else if (day.endsWith('2') && !day.endsWith('12')) {
-      return 'nd';
-    } else if (day.endsWith('3') && !day.endsWith('13')) {
-      return 'rd';
-    } else {
-      return 'th';
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const dropdowns = document.getElementsByClassName('dropdown');
+    const searchInput = this.searchInput.nativeElement;
+
+    let isTargetInsideDropdown = false;
+    for (let i = 0; i < dropdowns.length; i++) {
+      const dropdown = dropdowns[i] as HTMLElement;
+      if (dropdown.contains(target)) {
+        isTargetInsideDropdown = true;
+        break;
+      }
     }
+
+    if (!isTargetInsideDropdown && target !== searchInput) {
+      this.isDropdownOpen = false;
+    }
+  }
+
+  getCurrencySymbol(currency: string): string {
+    const currencySymbol = getSymbolFromCurrency(currency);
+    if (currencySymbol) {
+      return currencySymbol;
+    }
+    return '';
+  }
+
+  formatDate(lastRefreshedDate: string): string {
+    if (!lastRefreshedDate) {
+      return ''; // or any default value you want to display
+    }
+    const dateObject = new Date(lastRefreshedDate);
+    const formattedDate = format(dateObject, 'MMM do, h:mm:ss a', {
+      locale: enUS,
+    });
+    return formattedDate + ' UTC-5:00';
   }
 
   toggleProfileDropdown(): void {
     this.isProfileDropdownOpen = !this.isProfileDropdownOpen;
   }
 
+  toggleSearchIcon(): void {
+    this.isSearchBarOpen = !this.isSearchBarOpen;
+  }
+
   switchAccount(): void {
     this.router.navigateByUrl('/login');
   }
 
-  logout(): void {
+  logout() {
     // Perform any necessary logout logic (e.g., clearing session data)
-    this.router.navigateByUrl('/');
+    this.authService.signOut().then(() => {
+      console.log('Logout Successfull');
+      this.router.navigate(['/login']);
+    });
   }
 
-  toggleDropdown(): void {
+  toggleDropdown() {
     this.isDropdownOpen = true;
+  }
+
+  toggleSearchBar(): void {
+    if (window.innerWidth < 992) {
+      this.showSearchBar = !this.showSearchBar;
+    }
   }
 
   closeDropdown(): void {
     this.isDropdownOpen = false;
+  }
+
+  clearSearch(): void {
+    this.searchKeywords.setValue('');
+    this.closeDropdown();
   }
 
   searchStocks(event: Event) {
@@ -260,11 +309,16 @@ export class MainComponent implements OnInit, OnDestroy {
         // Extract the necessary data from the API response
         let timestamps: string[] = [];
         let prices: number[] = [];
+        this.lastRefreshedDate = data['Meta Data']['3. Last Refreshed'];
 
         if (interval === '1min') {
           // Handle 1 Day intervals
           if (data && data['Time Series (1min)']) {
-            timestamps = Object.keys(data['Time Series (1min)']).slice(0, 1440);
+            const latestDate =
+              data['Meta Data']['3. Last Refreshed'].split(' ')[0];
+            timestamps = Object.keys(data['Time Series (1min)']).filter(
+              (timestamp: string) => timestamp.startsWith(latestDate)
+            );
             prices = timestamps.map((timestamp: string) =>
               parseFloat(data['Time Series (1min)'][timestamp]['4. close'])
             );
@@ -333,9 +387,25 @@ export class MainComponent implements OnInit, OnDestroy {
       next: (quote: any) => {
         this.stockQuote = quote['Global Quote'];
         this.selectedStockName = this.getStockName(symbol);
+        this.selectedStockCurrency = this.getStockCurrency(symbol);
         this.selectedStockMarketOpen = this.getStockMo(symbol);
         this.selectedStockMarketClose = this.getStockMc(symbol);
         this.closeDropdown();
+        const changePercent = parseFloat(
+          quote['Global Quote']['10. change percent'].replace('%', '')
+        );
+        let lineColor: string;
+        if (changePercent > 0) {
+          lineColor = 'rgba(0, 255, 0, 1)';
+        } else if (changePercent < 0) {
+          lineColor = 'rgba(255, 0, 0, 1)';
+        } else {
+          lineColor = 'rgba(255, 255, 255, 1)';
+        }
+        if (this.chart) {
+          this.chart.data.datasets[0].borderColor = lineColor;
+          this.chart.update();
+        }
       },
       error: (error: any) => {
         console.error('Error retrieving stock quote:', error);
@@ -349,6 +419,14 @@ export class MainComponent implements OnInit, OnDestroy {
     );
     return stock ? stock['2. name'] : '';
   }
+
+  getStockCurrency(symbol: string): string {
+    const stock = this.searchResults.find(
+      (result) => result['1. symbol'] === symbol
+    );
+    return stock ? stock['8. currency'] : '';
+  }
+
   getStockMo(symbol: string): string {
     const stock = this.searchResults.find(
       (result) => result['1. symbol'] === symbol
@@ -360,10 +438,5 @@ export class MainComponent implements OnInit, OnDestroy {
       (result) => result['1. symbol'] === symbol
     );
     return stock ? stock['6. marketClose'] : '';
-  }
-
-  clearSearch(): void {
-    this.searchKeywords.setValue('');
-    this.closeDropdown();
   }
 }

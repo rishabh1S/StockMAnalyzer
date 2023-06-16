@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-landing',
@@ -7,6 +7,12 @@ import { Component } from '@angular/core';
 })
 export class LandingComponent {
   isMobileMenuOpen = false;
+  shouldApplyDropShadow = false;
+
+  @HostListener('window:scroll')
+  onWindowScroll() {
+    this.shouldApplyDropShadow = window.scrollY > 0;
+  }
 
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;

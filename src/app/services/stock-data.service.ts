@@ -21,10 +21,7 @@ export class StockDataService {
   private vantageApiBaseUrl = 'https://www.alphavantage.co';
   private vantageAPIKey1: string = environment.VantageAPIKey1;
   private vantageAPIKey2: string = environment.VantageAPIKey2;
-
-  //Twelve Data
-  private twelveDataApiBaseUrl = 'https://twelve-data1.p.rapidapi.com';
-  private twelveDataAPIKey: string = environment.TwelveDataAPIKey;
+  private vantageAPIKey3: string = environment.VantageAPIKey3;
 
   //Finnhub
   private finnhubAPIKey: string = environment.FinnhubAPIKey;
@@ -50,7 +47,7 @@ export class StockDataService {
   }
 
   getStockQuote(symbol: string): Observable<any> {
-    const url = `${this.vantageApiBaseUrl}/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${this.vantageAPIKey1}`;
+    const url = `${this.vantageApiBaseUrl}/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${this.vantageAPIKey3}`;
     return this.http.get(url, { headers: this.getHeaders() });
   }
 
@@ -78,7 +75,12 @@ export class StockDataService {
         break;
     }
 
-    const url = `https://www.alphavantage.co/query?function=${functionParam}&symbol=${symbol}&apikey=${this.vantageAPIKey2}`;
+    const url = `${this.vantageApiBaseUrl}/query?function=${functionParam}&symbol=${symbol}&apikey=${this.vantageAPIKey3}`;
+    return this.http.get(url);
+  }
+
+  fetchNews(): Observable<any> {
+    const url = `${this.vantageApiBaseUrl}/query?function=NEWS_SENTIMENT&apikey=${this.vantageAPIKey2}`;
     return this.http.get(url);
   }
 
@@ -86,7 +88,7 @@ export class StockDataService {
   getTrendingStocks(): Observable<any> {
     const trendingStocksUrl = `https://finnhub.io/api/v1/stock/symbol?exchange=US&token=${this.finnhubAPIKey}`;
 
-    return interval(10000).pipe(
+    return interval(6000).pipe(
       startWith(0),
       switchMap(() => this.http.get<any[]>(trendingStocksUrl)),
       switchMap((symbols: any[]) => {
